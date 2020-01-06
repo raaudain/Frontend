@@ -2,14 +2,29 @@ import React from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { Button, Container, Row, Col, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
+import { Button, Container, Row, Col, Nav, NavItem, NavLink } from 'reactstrap';
 
 function UserLogin({ errors, touched, isSubmitting }) {
     return (
         <div>
-            <Navbar color="#1b1411" light expand="md">
-                <NavbarBrand href="/">Sauti Africa</NavbarBrand>
-            </Navbar>
+            <Nav color="#1b1411">
+                <p>Sauti Africa</p>
+                <NavItem>
+                    <NavLink href="/">Home</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/about/">About Us</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/services/">Services</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/news/">News & Updates</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="/contact/">Contact</NavLink>
+                </NavItem>
+            </Nav>
             <Form>
                 <div>
                     {touched.email && errors.email && <p>{errors.email}</p>}
@@ -19,7 +34,7 @@ function UserLogin({ errors, touched, isSubmitting }) {
                     {touched.password && errors.password && <p>{errors.password}</p>}
                     <Field type="password" name="password" placeholder="Password" />
                 </div>
-                <a style={{ display: "block" }}>Forgot Password?</a>
+                <a href="/forgot/"style={{ display: "block" }}>Forgot Password?</a>
                 <Button disabled={isSubmitting}>Sign In</Button>
             </Form>
         </div>
@@ -44,11 +59,19 @@ const FormikLoginForm = withFormik({
             .required("Password is a required field")
     }),
 
-    handleSubmit(values) {
+    handleSubmit(values, {resetForm, setSubmitting }) {
         console.log(values);
-        //need to add functionality to the handle submit
-        //https://build-week-africanmarketplace.herokuapp.com
-        ///api/auth/login
+        axios
+        .post("https://build-week-africanmarketplace.herokuapp.com/api/auth/login", values)
+        .then(res => {
+          console.log(res);
+          resetForm();
+          setSubmitting(false);
+        })
+        .catch(err => {
+          console.log(err); // There was an error creating the data and logs to console
+          setSubmitting(false);
+        });
     }
 })(UserLogin);
 
