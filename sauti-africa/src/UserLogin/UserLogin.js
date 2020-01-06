@@ -27,8 +27,8 @@ function UserLogin({ errors, touched, isSubmitting }) {
             </Nav>
             <Form>
                 <div>
-                    {touched.email && errors.email && <p>{errors.email}</p>}
-                    <Field type="email" name="email" placeholder="Email" />
+                    {touched.username && errors.username && <p>{errors.username}</p>}
+                    <Field type="username" name="username" placeholder="Username" />
                 </div>
                 <div>
                     {touched.password && errors.password && <p>{errors.password}</p>}
@@ -43,17 +43,16 @@ function UserLogin({ errors, touched, isSubmitting }) {
 }
 
 const FormikLoginForm = withFormik({
-    mapPropsToValues({ email, password }) {
+    mapPropsToValues({ username, password }) {
         return {
-            email: email || "",
+            username: username || "",
             password: password || ""
         };
     },
 
     validationSchema: Yup.object().shape({
-        email: Yup.string()
-            .email("Invalid E-mail")
-            .required("E-mail is a required field"),
+        username: Yup.string()
+            .required("Username is a required field"),
         password: Yup.string()
             .min(6, "Password must be at least 6 characters")
             .required("Password is a required field")
