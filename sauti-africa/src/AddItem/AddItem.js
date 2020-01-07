@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import '../Styles/styles.css';
 
-function AddItem({ errors, touched, isSubmitting }) {
+function AddItem({ errors, touched, isSubmitting, setFieldValue }) {
     return (
         <div>
             <div className="nav">
@@ -31,8 +31,16 @@ function AddItem({ errors, touched, isSubmitting }) {
             <Form>
                 <div className="container">
                     <div className="input">
-                        {touched.market && errors.market && <p>{errors.market}</p>}
-                        <Field type="market" name="market" placeholder="market" />
+                        {touched.l_id && errors.l_id && <p>{errors.l_id}</p>}
+                        <Field name="l_id" as="select" placeholder="Select.." >
+                            <option value="Kenya">Kenya</option>
+                            <option value="Uganda">Uganda</option>
+                            <option value="Tanzania">Tanzania</option>
+                            <option value="Rwanda">Rwanda</option>
+                            <option value="South Sudan">South Sudan</option>
+                            <option value="Burudni">Burudni</option>
+                            <option value="Democratic Republic of Congo">Democratic Republic of Congo</option>
+                        </Field>
                     </div>
                     <div className="input">
                         {touched.item_name && errors.item_name && <p>{errors.item_name}</p>}
@@ -54,19 +62,21 @@ function AddItem({ errors, touched, isSubmitting }) {
 }
 
 const FormikAdditemForm = withFormik({
-    mapPropsToValues({ market, item_name, item_description, item_price }) {
+    mapPropsToValues({ l_id, item_name, item_description, item_price, c_id }) {
         return {
-            market: market || "",
+            l_id: l_id || "",
             item_name: item_name || "",
             item_description: item_description || "",
-            item_price: item_price || ""
+            item_price: item_price || "",
+            c_id: c_id || "produce"
         };
     },
 
     validationSchema: Yup.object().shape({
-        market: Yup.string()
-            .required("market is a required field"),
+        l_id: Yup.string()
+            .ensure(),
         item_name: Yup.string()
+
             .required("Item name is a required field"),
         item_description: Yup.string()
             .required("Description is a required field"),
@@ -77,7 +87,7 @@ const FormikAdditemForm = withFormik({
     handleSubmit(values, { resetForm, setSubmitting }) {
         console.log(values);
         axios
-            .post("https://build-week-africanmarketplace.herokuapp.com/api/users/:id/items", values)
+            .post("https://build-week-africanl_idplace.herokuapp.com/api/users/:id/items", values)
             .then(res => {
                 console.log(res);
                 resetForm();
