@@ -2,13 +2,15 @@ import React from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { Button, Container, Row, Col, Nav, NavItem, NavLink } from 'reactstrap';
+import { Nav, NavItem, NavLink } from 'reactstrap';
+import '../Styles/styles.css';
 
 function UserLogin({ errors, touched, isSubmitting }) {
     return (
         <div>
-            <Nav color="#1b1411">
-                <p>Sauti Africa</p>
+            <div className="nav">
+            <p>Sauti.</p>
+            <Nav>
                 <NavItem>
                     <NavLink href="/">Home</NavLink>
                 </NavItem>
@@ -25,20 +27,22 @@ function UserLogin({ errors, touched, isSubmitting }) {
                     <NavLink href="/contact/">Contact</NavLink>
                 </NavItem>
             </Nav>
+            </div>
             <Form>
-                <div>
+                <div className="container">
+                <div className="input">
                     {touched.username && errors.username && <p>{errors.username}</p>}
                     <Field type="username" name="username" placeholder="Username" />
                 </div>
-                <div>
+                <div className="input">
                     {touched.password && errors.password && <p>{errors.password}</p>}
                     <Field type="password" name="password" placeholder="Password" />
                 </div>
-                <a href="/forgot/"style={{ display: "block" }}>Forgot Password?</a>
-                <Button disabled={isSubmitting}>Sign In</Button>
+                <a className="forgot" href="/forgot/">Forgot Password?</a>
+                <button className="signin" disabled={isSubmitting}>Sign In</button>
+                </div>
             </Form>
         </div>
-        
     );
 }
 
