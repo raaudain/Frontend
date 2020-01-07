@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 // import { Button, Label, Input, FormGroup } from 'reactstrap';
 import NextBackNavigation from './NextBackNavigation';
-import SignUpFormImage from '../assets/sign-up-picture.png'
+import SignUpFormImage from '../assets/sun-wide.png'
 
 
 const img = `url('${SignUpFormImage}')`;
@@ -82,7 +82,9 @@ const mainImg = {
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: '48px',
-    maxWidth: '375px',
+    // maxWidth: '375px',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     lineHeight: '59px',
     width: '100%'
 }
