@@ -62,7 +62,7 @@ const FormikLoginForm = withFormik({
             .required("Password is a required field")
     }),
 
-    handleSubmit(values, {resetForm, setSubmitting }) {
+    handleSubmit(values, { resetForm, setSubmitting }) {
         console.log(values);
         axios
         .post("https://build-week-africanmarketplace.herokuapp.com/api/auth/login", values)
