@@ -1,6 +1,8 @@
 import React , { useState, useEffect } from 'react';
 import { withFormik, Form, Field } from 'formik';
 import axios from 'axios';
+import * as Yup from 'yup';
+
 // import { Button, Label, Input, FormGroup } from 'reactstrap';
 import NextBackNavigation from './NextBackNavigation';
 import SignUpFormImage from '../assets/sign-up-picture.png'
@@ -9,7 +11,7 @@ import SignUpFormImage from '../assets/sign-up-picture.png'
 const img = `url('${SignUpFormImage}')`;
 
 
-const SignUpForm = () => {
+const SignUpForm = ({errors, touched}) => {
 
 
 useEffect(() => {
@@ -59,21 +61,30 @@ const formStyle = {
     justifyContent: 'center',
     // minHeight: '50vh',
     width: '100%',
-    margin: '20px'
+    margin: '20px',
+    maxWidth: '375px'
 }
 
 const imgContainer = {
-    backgroundImage: img,
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center'
+}
+
+const mainImg = {
     height: '135px',
+    backgroundImage: img,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     color: 'white',
     fontFamily: 'Montserrat',
-fontStyle: 'normal',
-fontWeight: 'normal',
-fontSize: '48px',
-lineHeight: '59px'
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '48px',
+    maxWidth: '375px',
+    lineHeight: '59px',
+    width: '100%'
 }
 
 const buttonStyle = {
@@ -83,25 +94,29 @@ const buttonStyle = {
     fontFamily: 'Quicksand',
     fontStyle: 'normal',
     fontWeight: 'bold'
-
 }
 
 
 
     return (
 
-        <div >
+        <div class='SignUpFormPage' >
             <NextBackNavigation />
             <div style={imgContainer} className='imageContainer'>
-                <h2>Sauti</h2>
+                <div style={mainImg}>
+                    <h2>Sauti</h2>
+                </div>
             </div>
             <div style={containerStyle} className='sign-up-container'>
 
                 <Form style={formStyle}>
 
                         <h2 style={labelStyle}>YOUR INFORMATION</h2>
+                        {touched.username && errors.username && <p>{errors.username}</p>}
                         <Field style={inputStyle} type="text" name="username"  placeholder="USERNAME" />
+                        {touched.email && errors.email && <p>{errors.email}</p>}
                         <Field style={inputStyle} type="email" name="email"  placeholder="EMAIL" />
+                        {touched.password && errors.password && <p>{errors.password}</p>}
                         <Field style={inputStyle} type="password" name="password" placeholder="PASSWORD" />
                 
                     <button style={buttonStyle} type='submit'>Sign Up</button>
@@ -110,7 +125,6 @@ const buttonStyle = {
             </div>
 
         </div>
-
     )
 }
 
@@ -134,8 +148,17 @@ const FormikSignUpForm = withFormik({
                 console.log(err.response);
 
             })
-            
     },
+    validationSchema: Yup.object().shape({
+        username: Yup.string()
+            .required("Username is a required field"),
+        password: Yup.string()
+            .min(6, "Password must be at least 6 characters")
+            .required("Password is a required field"),
+        email: Yup.string()
+            .min(6, "Password must be at least 6 characters")
+            .required("email is a required field")
+    }),
 
 })(SignUpForm);
 
