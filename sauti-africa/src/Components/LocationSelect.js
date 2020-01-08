@@ -5,7 +5,8 @@ import Select from 'react-select';
 const selectionLabel = {
     fontWeight: 'bold',
     display: 'block',
-    textAlign: 'left'
+    textAlign: 'left',
+    fontSize: '.75rem'
   }
 
 function LocationSelect(props)  {

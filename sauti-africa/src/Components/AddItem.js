@@ -91,6 +91,7 @@ function AddItem({
         fontWeight: 'bold',
         display: 'block',
         textAlign: 'left',
+        fontSize: '.75rem'
       }
 
     return (
@@ -105,7 +106,7 @@ function AddItem({
                     <LocationSelect
                         id="l_id"
                         type="l_id"
-                        value={values.l_id}
+                        value={setFieldValue}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.l_id}
@@ -114,7 +115,7 @@ function AddItem({
                     <CategorySelect
                         id="c_id"
                         type="c_id"
-                        value={values.c_id}
+                        value={setFieldValue}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.c_id}
@@ -126,22 +127,22 @@ function AddItem({
                         type="item_description"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.item_description}
+                        value={setFieldValue}
                         error={errors.item_description}
                         touched={touched.item_description}
                     />
-                    {touched.item_description && errors.item_description && <div style={{ color: "red", marginTop: ".5rem", float: "left"}}>{errors.item_description}</div>}
+                    {touched.item_description && errors.item_description && <div style={{ color: "red", marginTop: ".5rem", textAlign: "left"}}>{errors.item_description}</div>}
                     <label htmlFor="item_price" style={selectionLabel}>PRICE</label>
                     <input style={inputStyle}
                         id="item_price"
                         type="item_price"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.item_price}
+                        value={setFieldValue}
                         error={errors.item_price}
                         touched={touched.item_price}
                     />
-                    {touched.item_price && errors.item_price && <div style={{ color: "red", marginTop: ".5rem", float: "left"}}>{errors.item_price}</div>}
+                    {touched.item_price && errors.item_price && <div style={{ color: "red", margin: "0 .5rem", textAlign: "left"}}>{errors.item_price}</div>}
                     <button style={buttonStyle} className="submit" disabled={isSubmitting}>SUBMIT</button>
                 </Form>
             </div>
@@ -152,24 +153,24 @@ function AddItem({
 
 const FormikAdditemForm = withFormik({
 
-    mapPropsToValues(l_id, c_id, item_description, item_price) {
+    mapPropsToValues({props}) {
         return {
-            l_id: "",
-            c_id: "",
-            item_description: "",
-            item_price: ""
+            l_id: props.value || "",
+            c_id: props.value || "",
+            item_description: props.value || "",
+            item_price: props.value || ""
         }
     },
 
     validationSchema: Yup.object().shape({
         l_id: Yup.string()
-            .required("Market is a required field"),
+            .required("*Market is a required field"),
         c_id: Yup.string()
-            .required("Item is a required field"),
+            .required("*Item is a required field"),
         item_description: Yup.string()
-            .required("Description is a required field"),
+            .required("*Description is a required field"),
         item_price: Yup.string()
-            .required("Price is a required field")
+            .required("*Price is a required field")
     }),
 
     handleSubmit(values, { resetForm, setSubmitting }) {
