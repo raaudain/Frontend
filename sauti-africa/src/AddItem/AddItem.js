@@ -5,7 +5,8 @@ import axios from 'axios';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import '../Styles/styles.css';
 
-function AddItem({ errors, touched, isSubmitting, setFieldValue }) {
+function AddItem({ errors, touched, isSubmitting }) {
+
     return (
         <div>
             <div className="nav">
@@ -32,6 +33,7 @@ function AddItem({ errors, touched, isSubmitting, setFieldValue }) {
                 <div className="container">
                     <div className="input">
                         {touched.l_id && errors.l_id && <p>{errors.l_id}</p>}
+                        <label htmlFor="l_id">Choose a location:</label>
                         <Field name="l_id" as="select" placeholder="Select.." >
                             <option value="Kenya">Kenya</option>
                             <option value="Uganda">Uganda</option>
