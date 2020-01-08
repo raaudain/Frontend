@@ -1,5 +1,5 @@
 import React from 'react';
-import { withFormik, Form, Field } from 'formik';
+import { withFormik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import NextBackNavigation from './NextBackNavigation';
@@ -13,6 +13,8 @@ function AddItem({
     touched,
     errors,
     handleSubmit,
+    handleChange,
+    handleBlur,
     setFieldValue,
     setFieldTouched,
     isSubmitting
@@ -23,23 +25,13 @@ function AddItem({
 
     const inputStyle = {
 
-        marginBottom: '20px',
-        fontFamily: 'Quicksand',
-        border: '1px solid #000000',
+        padding: '.5rem',
+        fontSize: '16px',
+        display: 'block',
         borderRadius: '4px',
-        paddingLeft: '10px',
-        fontSize: '1rem',
-        width: '100%'
-    }
-
-    const labelStyle = {
-        fontFamily: 'Raleway',
-        color: '#000000',
-        textAlign: 'left',
-        padding: '20px',
-        fontWeight: '600',
-        fontSize: '12px',
-        lineHeight: '18px'
+        border: '1px solid #ccc',
+        marginBottom: '.5rem',
+          
     }
 
     const containerStyle = {
@@ -90,8 +82,16 @@ function AddItem({
         color: 'white',
         fontFamily: 'Quicksand',
         fontStyle: 'normal',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        border: 'none',
+        padding: '.5rem'
     }
+
+    const selectionLabel = {
+        fontWeight: 'bold',
+        display: 'block',
+        textAlign: 'left',
+      }
 
     return (
         <div className="addItem">
@@ -103,21 +103,45 @@ function AddItem({
             <div style={containerStyle} className='addItemContainer'>
                 <Form onSubmit={handleSubmit} style={formStyle} type="l_id" name="l_id">
                     <LocationSelect
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
+                        id="l_id"
+                        type="l_id"
+                        value={values.l_id}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         error={errors.l_id}
                         touched={touched.l_id}
                     />
                     <CategorySelect
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                        error={errors.l_id}
-                        touched={touched.l_id}
+                        id="c_id"
+                        type="c_id"
+                        value={values.c_id}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.c_id}
+                        touched={touched.c_id}
                     />
-                    {touched.item_description && errors.item_description && <p style={labelStyle}>{errors.item_description}</p>}
-                    <Field style={inputStyle} type="item_description" name="item_description" placeholder="DESCRIPTION" />
-                    {touched.item_price && errors.item_price && <p style={labelStyle}>{errors.item_price}</p>}
-                    <Field style={inputStyle} type="item_price" name="item_price" placeholder="PRICE" />
+                    <label htmlFor="item_description" style={selectionLabel}>ITEM DESCRIPTION</label>
+                    <input style={inputStyle}
+                        id="item_description"
+                        type="item_description"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.item_description}
+                        error={errors.item_description}
+                        touched={touched.item_description}
+                    />
+                    {touched.item_description && errors.item_description && <div style={{ color: "red", marginTop: ".5rem", float: "left"}}>{errors.item_description}</div>}
+                    <label htmlFor="item_price" style={selectionLabel}>PRICE</label>
+                    <input style={inputStyle}
+                        id="item_price"
+                        type="item_price"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.item_price}
+                        error={errors.item_price}
+                        touched={touched.item_price}
+                    />
+                    {touched.item_price && errors.item_price && <div style={{ color: "red", marginTop: ".5rem", float: "left"}}>{errors.item_price}</div>}
                     <button style={buttonStyle} className="submit" disabled={isSubmitting}>SUBMIT</button>
                 </Form>
             </div>
@@ -128,10 +152,10 @@ function AddItem({
 
 const FormikAdditemForm = withFormik({
 
-    mapPropsToValues({ props }) {
+    mapPropsToValues(l_id, c_id, item_description, item_price) {
         return {
             l_id: "",
-            item_name: "",
+            c_id: "",
             item_description: "",
             item_price: ""
         }
@@ -140,7 +164,7 @@ const FormikAdditemForm = withFormik({
     validationSchema: Yup.object().shape({
         l_id: Yup.string()
             .required("Market is a required field"),
-        item_name: Yup.string()
+        c_id: Yup.string()
             .required("Item is a required field"),
         item_description: Yup.string()
             .required("Description is a required field"),

@@ -2,6 +2,12 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 
+const selectionLabel = {
+    fontWeight: 'bold',
+    display: 'block',
+    textAlign: 'left'
+  }
+
 function CategorySelect(props)  {
 
     const [category, setCategory] = useState([]);
@@ -20,7 +26,7 @@ function CategorySelect(props)  {
 
     return (
         <div style={{ margin: "1rem 0" }}>
-            <label htmlFor="item-name">Item</label>
+            <label htmlFor="item-name" style={selectionLabel}>NAME OF ITEM</label>
             <Select
                 id="item_name"
                 getOptionLabel={category =>

@@ -2,6 +2,12 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 
+const selectionLabel = {
+    fontWeight: 'bold',
+    display: 'block',
+    textAlign: 'left'
+  }
+
 function LocationSelect(props)  {
 
     const [location, setLocation] = useState([]);
@@ -20,7 +26,7 @@ function LocationSelect(props)  {
 
     return (
         <div style={{ margin: "1rem 0" }}>
-            <label htmlFor="locations">Market</label>
+            <label htmlFor="locations" style={selectionLabel}>MARKET LOCATION</label>
             <Select
                 id="l_id"
                 getOptionLabel={location =>
@@ -30,9 +36,7 @@ function LocationSelect(props)  {
                     `${location.id}`
                 }
                 value={location.value}
-                // isSearchable={this.location.isSearchable}
                 options={location}
-                // searchable ={location.country.searchable}
             />
             {!!props.error && props.touched && (
                 <div style={{ color: "red", marginTop: ".5rem", float: "left"}}>
