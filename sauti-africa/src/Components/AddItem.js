@@ -6,6 +6,7 @@ import NextBackNavigation from './NextBackNavigation';
 import '../Styles/NavigationComponentStyles';
 import ProfileImage from '../Assets/profile_image.png';
 import LocationSelect from './LocationSelect';
+import CategorySelect from './CategorySelect';
 
 function AddItem({
     values,
@@ -65,7 +66,6 @@ function AddItem({
     }
 
     const mainImg = {
-        height: '135px',
         backgroundImage: img,
         display: 'flex',
         justifyContent: 'center',
@@ -79,8 +79,8 @@ function AddItem({
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         lineHeight: '59px',
-        width: '275px',
-        height: '275px',
+        width: '175px',
+        height: '175px',
         borderRadius: '100%'
     }
 
@@ -101,16 +101,19 @@ function AddItem({
                 </div>
             </div>
             <div style={containerStyle} className='addItemContainer'>
-                <Form onSubmit={handleSubmit} style={formStyle}>
+                <Form onSubmit={handleSubmit} style={formStyle} type="l_id" name="l_id">
                     <LocationSelect
-                        value={values.locations}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
-                        error={errors.locations}
-                        touched={touched.locations}
+                        error={errors.l_id}
+                        touched={touched.l_id}
                     />
-                    {touched.item_name && errors.item_name && <p style={labelStyle}>{errors.item_name}</p>}
-                    <Field style={inputStyle} type="item_name" name="item_name" placeholder="NAME" />
+                    <CategorySelect
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                        error={errors.l_id}
+                        touched={touched.l_id}
+                    />
                     {touched.item_description && errors.item_description && <p style={labelStyle}>{errors.item_description}</p>}
                     <Field style={inputStyle} type="item_description" name="item_description" placeholder="DESCRIPTION" />
                     {touched.item_price && errors.item_price && <p style={labelStyle}>{errors.item_price}</p>}
@@ -133,6 +136,17 @@ const FormikAdditemForm = withFormik({
             item_price: ""
         }
     },
+
+    validationSchema: Yup.object().shape({
+        l_id: Yup.string()
+            .required("Market is a required field"),
+        item_name: Yup.string()
+            .required("Item is a required field"),
+        item_description: Yup.string()
+            .required("Description is a required field"),
+        item_price: Yup.string()
+            .required("Price is a required field")
+    }),
 
     handleSubmit(values, { resetForm, setSubmitting }) {
         console.log(values);

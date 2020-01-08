@@ -2,16 +2,16 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 
-function LocationSelect(props)  {
+function CategorySelect(props)  {
 
-    const [location, setLocation] = useState([]);
+    const [category, setCategory] = useState([]);
 
     useEffect(() => {
         axios
-            .get("https://build-week-africanmarketplace.herokuapp.com/api/location")
+            .get("https://build-week-africanmarketplace.herokuapp.com/api/category")
             .then(res => {
                 console.log(res)
-                setLocation(res.data)
+                setCategory(res.data)
             })
             .catch(err => {
                 console.log(err); // There was an error creating the data and logs to console
@@ -20,18 +20,18 @@ function LocationSelect(props)  {
 
     return (
         <div style={{ margin: "1rem 0" }}>
-            <label htmlFor="locations">Market</label>
+            <label htmlFor="item-name">Item</label>
             <Select
-                id="l_id"
-                getOptionLabel={location =>
-                    `${location.country}`
+                id="item_name"
+                getOptionLabel={category =>
+                    `${category.category}`
                   }
-                getOptionValue={location => 
-                    `${location.id}`
+                getOptionValue={category => 
+                    `${category.loc_id}`
                 }
-                value={location.value}
+                value={category.value}
                 // isSearchable={this.location.isSearchable}
-                options={location}
+                options={category}
                 // searchable ={location.country.searchable}
             />
             {!!props.error && props.touched && (
@@ -43,4 +43,4 @@ function LocationSelect(props)  {
     )
 }
 
-export default LocationSelect;
+export default CategorySelect;
