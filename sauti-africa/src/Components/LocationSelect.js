@@ -25,10 +25,10 @@ class LocationSelect extends React.Component {
     render() {
         return (
             <div style={{ margin: "1rem 0" }}>
-                <label htmlFor="location">Market</label>
+                <label htmlFor="locations">Market</label>
                 <Select
                     id="l_id"
-                    locations={locations}
+                    options={locations}
                     onChange={this.handleChange}
                     onBlur={this.handleBlur}
                     value={this.props.value}

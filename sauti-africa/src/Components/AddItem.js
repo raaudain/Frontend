@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import NextBackNavigation from './NextBackNavigation';
 import '../Styles/NavigationComponentStyles';
-import LocationImage from '../Assets/location.png';
+import ProfileImage from '../Assets/profile_image.png';
 import LocationSelect from './LocationSelect';
 
 function AddItem({
@@ -18,7 +18,7 @@ function AddItem({
 
 }) {
 
-    const img = `url('${LocationImage}')`;
+    const img = `url('${ProfileImage}')`;
 
     const inputStyle = {
 
@@ -79,7 +79,9 @@ function AddItem({
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         lineHeight: '59px',
-        width: '100%'
+        width: '275px',
+        height: '275px',
+        borderRadius: '100%'
     }
 
     const buttonStyle = {
@@ -96,7 +98,6 @@ function AddItem({
             <NextBackNavigation />
             <div style={imgContainer} className='imageContainer'>
                 <div style={mainImg}>
-                    <h2>Create Your Listing</h2>
                 </div>
             </div>
             <div style={containerStyle} className='addItemContainer'>
