@@ -5,8 +5,18 @@ import axios from 'axios';
 import NextBackNavigation from './NextBackNavigation';
 import '../Styles/NavigationComponentStyles';
 import LocationImage from '../Assets/location.png';
+import LocationSelect from './LocationSelect';
 
-function AddItem({ errors, touched, isSubmitting }) {
+function AddItem({
+    values,
+    touched,
+    errors,
+    handleSubmit,
+    setFieldValue,
+    setFieldTouched,
+    isSubmitting
+
+}) {
 
     const img = `url('${LocationImage}')`;
 
@@ -53,7 +63,7 @@ function AddItem({ errors, touched, isSubmitting }) {
         width: '100%',
         justifyContent: 'center'
     }
-    
+
     const mainImg = {
         height: '135px',
         backgroundImage: img,
@@ -65,7 +75,7 @@ function AddItem({ errors, touched, isSubmitting }) {
         fontStyle: 'normal',
         fontWeight: 'normal',
         fontSize: '48px',
-        // maxWidth: '375px',
+        maxWidth: '375px',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         lineHeight: '59px',
@@ -82,30 +92,6 @@ function AddItem({ errors, touched, isSubmitting }) {
     }
 
     return (
-        //!! UPDATED TO STYLE MATCH USERLOGIN AND SIGNUP FOR CONSISTENCY!!
-        // <div>
-        //     <div className="nav">
-        //         <p>Sauti.</p>
-        //         <Nav>
-        //             <NavItem>
-        //                 <NavLink href="/">Home</NavLink>
-        //             </NavItem>
-        //             <NavItem>
-        //                 <NavLink href="/about/">About Us</NavLink>
-        //             </NavItem>
-        //             <NavItem>
-        //                 <NavLink href="/services/">Services</NavLink>
-        //             </NavItem>
-        //             <NavItem>
-        //                 <NavLink href="/news/">News & Updates</NavLink>
-        //             </NavItem>
-        //             <NavItem>
-        //                 <NavLink href="/contact/">Contact</NavLink>
-        //             </NavItem>
-        //         </Nav>
-        //     </div>
-
-
         <div className="addItem">
             <NextBackNavigation />
             <div style={imgContainer} className='imageContainer'>
@@ -114,17 +100,14 @@ function AddItem({ errors, touched, isSubmitting }) {
                 </div>
             </div>
             <div style={containerStyle} className='addItemContainer'>
-                <Form style={formStyle}>
-                    {touched.l_id && errors.l_id && <p>{errors.l_id}</p>}
-                    <Field name="l_id" as="select" placeholder="Select.." >
-                        <option value="Kenya">Kenya</option>
-                        <option value="Uganda">Uganda</option>
-                        <option value="Tanzania">Tanzania</option>
-                        <option value="Rwanda">Rwanda</option>
-                        <option value="South Sudan">South Sudan</option>
-                        <option value="Burudni">Burudni</option>
-                        <option value="Democratic Republic of Congo">Democratic Republic of Congo</option>
-                    </Field>
+                <Form onSubmit={handleSubmit} style={formStyle}>
+                    <LocationSelect
+                        value={values.locations}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                        error={errors.locations}
+                        touched={touched.locations}
+                    />
                     {touched.item_name && errors.item_name && <p style={labelStyle}>{errors.item_name}</p>}
                     <Field style={inputStyle} type="item_name" name="item_name" placeholder="NAME" />
                     {touched.item_description && errors.item_description && <p style={labelStyle}>{errors.item_description}</p>}
@@ -136,30 +119,19 @@ function AddItem({ errors, touched, isSubmitting }) {
             </div>
         </div>
     );
-}
+};
+
 
 const FormikAdditemForm = withFormik({
-    mapPropsToValues({ l_id, item_name, item_description, item_price, c_id }) {
+
+    mapPropsToValues({ props }) {
         return {
-            l_id: l_id || "",
-            item_name: item_name || "",
-            item_description: item_description || "",
-            item_price: item_price || "",
-            c_id: c_id || "produce"
-        };
+            l_id: "",
+            item_name: "",
+            item_description: "",
+            item_price: ""
+        }
     },
-
-    validationSchema: Yup.object().shape({
-        l_id: Yup.string()
-            .ensure(),
-        item_name: Yup.string()
-
-            .required("Item name is a required field"),
-        item_description: Yup.string()
-            .required("Description is a required field"),
-        item_price: Yup.string()
-            .required("Price is a required field")
-    }),
 
     handleSubmit(values, { resetForm, setSubmitting }) {
         console.log(values);
