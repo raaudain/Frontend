@@ -83,6 +83,8 @@ function UserLogin({ errors, touched, isSubmitting }) {
     
 
     return (
+        // !!REPLACED MARKETING NAVIGATION TO BACK/NEXT TO MATCH STYLING OF SIGN UP!!
+        
         // <div>
         //     <div className="nav">
         //     <p>Sauti.</p>
@@ -104,7 +106,7 @@ function UserLogin({ errors, touched, isSubmitting }) {
         //         </NavItem>
         //     </Nav>
         //     </div>
-        <div class='SignUpFormPage' >
+        <div className='SignUpFormPage' >
         <NextBackNavigation />
         <div style={imgContainer} className='imageContainer'>
             <div style={mainImg}>
