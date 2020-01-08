@@ -108,7 +108,7 @@ function UserLogin({ errors, touched, isSubmitting }) {
         <NextBackNavigation />
         <div style={imgContainer} className='imageContainer'>
             <div style={mainImg}>
-                <h2>Sauti</h2>
+                <h2>Login</h2>
             </div>
         </div>
         <div style={containerStyle} className='sign-up-container'>
