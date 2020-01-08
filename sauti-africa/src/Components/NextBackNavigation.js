@@ -14,8 +14,8 @@ const NextBackNavigation = () => {
 
     return (
         <NavigationComponent>
-            <BackNavigation><i style={arrowStyles} class="fa fa-angle-left"></i> <div style={textPadding}>Back</div></BackNavigation>
-            <NextNavigation><div style={textPadding}>Next</div> <i  style={arrowStyles} class="fa fa-angle-right"></i></NextNavigation>
+            <BackNavigation><i style={arrowStyles} className="fa fa-angle-left"></i> <div style={textPadding}>Back</div></BackNavigation>
+            <NextNavigation><div style={textPadding}>Next</div> <i  style={arrowStyles} className="fa fa-angle-right"></i></NextNavigation>
         </NavigationComponent>
     )
 }

@@ -4,8 +4,11 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import NextBackNavigation from './NextBackNavigation';
 import '../Styles/NavigationComponentStyles';
+import LocationImage from '../Assets/location.png';
 
 function AddItem({ errors, touched, isSubmitting }) {
+
+    const img = `url('${LocationImage}')`;
 
     const inputStyle = {
 
@@ -45,6 +48,30 @@ function AddItem({ errors, touched, isSubmitting }) {
         maxWidth: '375px'
     }
 
+    const imgContainer = {
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'center'
+    }
+    
+    const mainImg = {
+        height: '135px',
+        backgroundImage: img,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontFamily: 'Montserrat',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '48px',
+        // maxWidth: '375px',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        lineHeight: '59px',
+        width: '100%'
+    }
+
     const buttonStyle = {
         background: '#000000',
         borderRadius: '4px',
@@ -81,10 +108,14 @@ function AddItem({ errors, touched, isSubmitting }) {
 
         <div className="addItem">
             <NextBackNavigation />
+            <div style={imgContainer} className='imageContainer'>
+                <div style={mainImg}>
+                    <h2>Create Your Listing</h2>
+                </div>
+            </div>
             <div style={containerStyle} className='addItemContainer'>
                 <Form style={formStyle}>
                     {touched.l_id && errors.l_id && <p>{errors.l_id}</p>}
-                    <label htmlFor="l_id">Choose a location:</label>
                     <Field name="l_id" as="select" placeholder="Select.." >
                         <option value="Kenya">Kenya</option>
                         <option value="Uganda">Uganda</option>
@@ -100,7 +131,7 @@ function AddItem({ errors, touched, isSubmitting }) {
                     <Field style={inputStyle} type="item_description" name="item_description" placeholder="DESCRIPTION" />
                     {touched.item_price && errors.item_price && <p style={labelStyle}>{errors.item_price}</p>}
                     <Field style={inputStyle} type="item_price" name="item_price" placeholder="PRICE" />
-                    <button stlye={buttonStyle} className="submit" disabled={isSubmitting}>SUBMIT</button>
+                    <button style={buttonStyle} className="submit" disabled={isSubmitting}>SUBMIT</button>
                 </Form>
             </div>
         </div>
