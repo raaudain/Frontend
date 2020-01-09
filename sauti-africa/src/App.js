@@ -11,6 +11,7 @@ import AddItem from './components/AddItem';
 import Category from './components/Category';
 import Location from './components/Location';
 import {UserContext} from "./contexts/UserContext";
+import Edit from './components/Edit';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/market-price" component={MarketPrice} />
         <Route exact path="/market-price/:id" render={(props) => <Category {...props} />}/>
-        <Route exact path="/market-price/:id/:id" render={(props) => <Location {...props} />} />
+        <Route exact path="/set-price/:id" render={(props) => <Edit {...props} />} />
         <PrivateRoute exact path="/set-price" component={SetPrice} />
         <PrivateRoute exact path="/add-item" component={AddItem} />
         </div>

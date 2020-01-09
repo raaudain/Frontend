@@ -19,20 +19,29 @@ const Register = (props) => {
 
     const register = e => {
         e.preventDefault();
-        console.log(credentials);
-        //axiosWithAuth()  
-        axios  
+        let name = credentials.username;
+        axiosWithAuth()    
             .post(`https://build-week-africanmarketplace.herokuapp.com/api/auth/register`,
                 credentials,
             )
             .then(res => {
-                localStorage.setItem('token', res.data.payload);
+                axiosWithAuth()
+                    .get('https://build-week-africanmarketplace.herokuapp.com/api/users')
+                    .then(res => {
+                        console.log(name);
+                        var found = res.data.find(function (element) {
+                            return element.username === name;
+                        });
+                        this.props.dispatch({ type: 'USERNAME', username: found.id });
+                    })
+                    .catch(err => console.log(err)); 
+                localStorage.setItem('token', res.data.token);
                 props.history.push('/market-price');
             })
             .catch(err => {
-                console.log("there was an error");
-                console.log(err);
-            })
+                console.log(err.response);
+                alert("Wrong user or password");
+            });
     }
 
     return (
