@@ -11,15 +11,15 @@ import CategorySelect from './CategorySelect';
 function AddItem(props) {
 
     const {
-    values,
-    touched,
-    errors,
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    setFieldTouched,
-    isSubmitting
+        values,
+        touched,
+        errors,
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        setFieldValue,
+        setFieldTouched,
+        isSubmitting
     } = props;
     const img = `url('${ProfileImage}')`;
 
@@ -31,7 +31,7 @@ function AddItem(props) {
         borderRadius: '4px',
         border: '1px solid #ccc',
         marginBottom: '.5rem',
-          
+
     }
 
     const containerStyle = {
@@ -92,7 +92,7 @@ function AddItem(props) {
         display: 'block',
         textAlign: 'left',
         fontSize: '.75rem'
-      }
+    }
 
     return (
         <div className="addItem">
@@ -103,10 +103,12 @@ function AddItem(props) {
             </div>
             <div style={containerStyle} className='addItemContainer'>
                 <Form onSubmit={handleSubmit} style={formStyle} type="l_id" name="l_id">
-                    <LocationSelect
+                <label htmlFor="locations" style={selectionLabel}>MARKET LOCATION</label>
+                    <LocationSelect 
                         id="l_id"
                         type="l_id"
-                        value={values.l_id}
+                        key={props.name}
+                        values={props.index}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.l_id}
@@ -115,11 +117,17 @@ function AddItem(props) {
                     <CategorySelect
                         id="c_id"
                         type="c_id"
-                        value={values.c_id}
+                        values={props.id}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.c_id}
                         touched={touched.c_id}
+                        onSubmit={(values, actions) => {
+                            setTimeout(() => {
+                                alert(JSON.stringify(values, null, 2));
+                                actions.setSubmitting(false);
+                            }, 1000);
+                        }}
                     />
                     <label htmlFor="item_description" style={selectionLabel}>ITEM DESCRIPTION</label>
                     <input style={inputStyle}
@@ -127,22 +135,22 @@ function AddItem(props) {
                         type="item_description"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.item_description}
+                        values={values.item_description}
                         error={errors.item_description}
                         touched={touched.item_description}
                     />
-                    {touched.item_description && errors.item_description && <div style={{ color: "red", marginTop: ".5rem", textAlign: "left"}}>{errors.item_description}</div>}
+                    {touched.item_description && errors.item_description && <div style={{ color: "red", marginTop: ".5rem", textAlign: "left" }}>{errors.item_description}</div>}
                     <label htmlFor="item_price" style={selectionLabel}>PRICE</label>
                     <input style={inputStyle}
                         id="item_price"
                         type="item_price"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.item_price}
+                        values={values.item_price}
                         error={errors.item_price}
                         touched={touched.item_price}
                     />
-                    {touched.item_price && errors.item_price && <div style={{ color: "red", margin: "0 .5rem", textAlign: "left"}}>{errors.item_price}</div>}
+                    {touched.item_price && errors.item_price && <div style={{ color: "red", margin: "0 .5rem", textAlign: "left" }}>{errors.item_price}</div>}
                     <button style={buttonStyle} className="submit" disabled={isSubmitting}>SUBMIT</button>
                 </Form>
             </div>
@@ -154,19 +162,19 @@ function AddItem(props) {
 const FormikAdditemForm = withFormik({
 
     mapPropsToValues: props => ({
-        l_id: props.l_id.value || "",
-        c_id: props.c_id.value || "",
-        item_description: props.item_description.value || "",
-        item_price: props.item_price.value || ""
-      }),
+        l_id: props.values || "",
+        c_id: props.values || "",
+        item_description: "",
+        item_price: ""
+    }),
 
     validationSchema: Yup.object().shape({
-        l_id: Yup.string()
-            .ensure()
-            .required("*Market is a required field"),
-        c_id: Yup.string()
-            .ensure()
-            .required("*Item is a required field"),
+        // l_id: Yup.string()
+        //     .ensure()
+        //     .required("*Market is a required field"),
+        // c_id: Yup.string()
+        //     .ensure()
+        //     .required("*Item is a required field"),
         item_description: Yup.string()
             .required("*Description is a required field"),
         item_price: Yup.string()
