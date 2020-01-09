@@ -1,19 +1,7 @@
 import React, {useEffect, useState} from 'react'; 
 import axios from 'axios';
 import { Field } from 'formik';
-
-const inputStyle = {
-
-    padding: '.5rem',
-    fontSize: '16px',
-    display: 'block',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    marginBottom: '.25rem',
-    width: '100%',
-    backgroundColor: 'white'
-
-}
+import { inputStyle } from '../Styles/LocationSelectStyles';
 
 function LocationSelect(props)  {
 
