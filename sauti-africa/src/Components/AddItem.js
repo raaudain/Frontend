@@ -21,6 +21,7 @@ function AddItem(props) {
         setFieldTouched,
         isSubmitting
     } = props;
+
     const img = `url('${ProfileImage}')`;
 
     const inputStyle = {
@@ -106,33 +107,27 @@ function AddItem(props) {
                 <label htmlFor="locations" style={selectionLabel}>MARKET LOCATION</label>
                     <LocationSelect 
                         id="l_id"
-                        type="l_id"
-                        key={props.name}
-                        values={props.index}
+                        type="text"
+                        values={props.id}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.l_id}
                         touched={touched.l_id}
                     />
+                    <label htmlFor="items" style={selectionLabel}>SELECT AN ITEM</label>
                     <CategorySelect
                         id="c_id"
-                        type="c_id"
+                        type="text"
                         values={props.id}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.c_id}
                         touched={touched.c_id}
-                        onSubmit={(values, actions) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                actions.setSubmitting(false);
-                            }, 1000);
-                        }}
                     />
                     <label htmlFor="item_description" style={selectionLabel}>ITEM DESCRIPTION</label>
                     <input style={inputStyle}
                         id="item_description"
-                        type="item_description"
+                        type="text"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         values={values.item_description}
@@ -143,7 +138,7 @@ function AddItem(props) {
                     <label htmlFor="item_price" style={selectionLabel}>PRICE</label>
                     <input style={inputStyle}
                         id="item_price"
-                        type="item_price"
+                        type="text"
                         onChange={handleChange}
                         onBlur={handleBlur}
                         values={values.item_price}
@@ -169,12 +164,12 @@ const FormikAdditemForm = withFormik({
     }),
 
     validationSchema: Yup.object().shape({
-        // l_id: Yup.string()
-        //     .ensure()
-        //     .required("*Market is a required field"),
-        // c_id: Yup.string()
-        //     .ensure()
-        //     .required("*Item is a required field"),
+        l_id: Yup.string()
+            .ensure()
+            .required("*Market is a required field"),
+        c_id: Yup.string()
+            .ensure()
+            .required("*Item is a required field"),
         item_description: Yup.string()
             .required("*Description is a required field"),
         item_price: Yup.string()

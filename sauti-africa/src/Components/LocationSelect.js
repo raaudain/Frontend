@@ -2,13 +2,6 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Field } from 'formik';
 
-// const selectionLabel = {
-//     fontWeight: 'bold',
-//     display: 'block',
-//     textAlign: 'left',
-//     fontSize: '.75rem'
-//   }
-
 const inputStyle = {
 
     padding: '.5rem',
@@ -16,11 +9,25 @@ const inputStyle = {
     display: 'block',
     borderRadius: '4px',
     border: '1px solid #ccc',
-    marginBottom: '.5rem',
+    marginBottom: '.25rem',
+    width: '100%',
+    backgroundColor: 'white'
 
 }
 
 function LocationSelect(props)  {
+
+    const {
+        values,
+        touched,
+        errors,
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        setFieldValue,
+        setFieldTouched,
+        isSubmitting
+    } = props;
 
     const [location, setLocation] = useState([]);
 
@@ -39,7 +46,12 @@ function LocationSelect(props)  {
 
     return (
         <div style={{ margin: "1rem 0" }}>
-            <Field as="select" style={inputStyle} searchable={true}>
+            <Field 
+            name="l_id"
+            as="select" 
+            style={inputStyle}
+            onClick={e => e.target.value}
+            >
             {location.length > 0 ? location.map((object, index) => {
                 return <option value={object.country} key={object.id}
             >{object.country}</option>

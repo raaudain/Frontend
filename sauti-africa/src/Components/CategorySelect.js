@@ -2,13 +2,6 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Field } from 'formik';
 
-// const selectionLabel = {
-//     fontWeight: 'bold',
-//     display: 'block',
-//     textAlign: 'left',
-//     fontSize: '.75rem'
-//   }
-
 const inputStyle = {
 
     padding: '.5rem',
@@ -16,7 +9,9 @@ const inputStyle = {
     display: 'block',
     borderRadius: '4px',
     border: '1px solid #ccc',
-    marginBottom: '.5rem',
+    marginBottom: '.25rem',
+    width: '100%',
+    backgroundColor: 'white'
 
 }
   
@@ -40,7 +35,11 @@ function CategorySelect(props)  {
 
     return (
         <div style={{ margin: "1rem 0" }}>
-            <Field as="select" style={inputStyle} searchable={true}>
+            <Field as="select"
+            name="c_id"
+            style={inputStyle}
+            onClick={e => e.target.value}
+            >
             {category.length > 0 ? category.map((object, index) => {
                 return <option value={object.category} key={object.id}
             >{object.category}</option>
