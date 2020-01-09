@@ -23,8 +23,6 @@ function Header(props) {
         }
     });
 
-
-
     return (
         <div class="topnav">
             <Link to="/">Home</Link>

@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import { UserContext } from "../contexts/UserContext";
 import { connect } from 'react-redux';
 
 class Login extends React.Component {
@@ -9,7 +7,7 @@ class Login extends React.Component {
         credentials: {
             username: '',
             password: ''
-        }
+        },
     };
 
     handleChange = e => {
@@ -23,14 +21,29 @@ class Login extends React.Component {
 
     login = e => {
         e.preventDefault();
+        let name = this.state.credentials.username;
         axiosWithAuth()
             .post('https://build-week-africanmarketplace.herokuapp.com/api/auth/login', this.state.credentials)
             .then(res => {
-                console.log(res);
-                localStorage.setItem('token', res.data.payload);
+                axiosWithAuth()
+                    .get('https://build-week-africanmarketplace.herokuapp.com/api/users')
+                    .then(res => {
+                        console.log(name);
+                        var found = res.data.find(function (element) {
+                            return element.username === name;
+                        });
+                        console.log('BBB');
+                        console.log(found.id);
+                        this.props.dispatch({ type: 'USER', userId: found.id });
+                    })
+                    .catch(err => console.log(err)); 
+                localStorage.setItem('token', res.data.token);                
                 this.props.history.push('/market-price');
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err.response);
+                alert("Wrong user or password");
+            });  
     };
 
     render() {
@@ -65,13 +78,4 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state);
-    return {
-        username: state
-    }
-};
-
-export default connect(
-    mapStateToProps
-)(Login);
+export default connect()(Login);
