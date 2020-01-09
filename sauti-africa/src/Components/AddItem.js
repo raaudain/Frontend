@@ -8,7 +8,9 @@ import ProfileImage from '../Assets/profile_image.png';
 import LocationSelect from './LocationSelect';
 import CategorySelect from './CategorySelect';
 
-function AddItem({
+function AddItem(props) {
+
+    const {
     values,
     touched,
     errors,
@@ -18,9 +20,7 @@ function AddItem({
     setFieldValue,
     setFieldTouched,
     isSubmitting
-
-}) {
-
+    } = props;
     const img = `url('${ProfileImage}')`;
 
     const inputStyle = {
@@ -106,7 +106,7 @@ function AddItem({
                     <LocationSelect
                         id="l_id"
                         type="l_id"
-                        value={setFieldValue}
+                        value={values.l_id}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.l_id}
@@ -115,7 +115,7 @@ function AddItem({
                     <CategorySelect
                         id="c_id"
                         type="c_id"
-                        value={setFieldValue}
+                        value={values.c_id}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         error={errors.c_id}
@@ -127,7 +127,7 @@ function AddItem({
                         type="item_description"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={setFieldValue}
+                        value={values.item_description}
                         error={errors.item_description}
                         touched={touched.item_description}
                     />
@@ -138,7 +138,7 @@ function AddItem({
                         type="item_price"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={setFieldValue}
+                        value={values.item_price}
                         error={errors.item_price}
                         touched={touched.item_price}
                     />
@@ -153,19 +153,19 @@ function AddItem({
 
 const FormikAdditemForm = withFormik({
 
-    mapPropsToValues({props}) {
-        return {
-            l_id: props.value || "",
-            c_id: props.value || "",
-            item_description: props.value || "",
-            item_price: props.value || ""
-        }
-    },
+    mapPropsToValues: props => ({
+        l_id: props.l_id.value || "",
+        c_id: props.c_id.value || "",
+        item_description: props.item_description.value || "",
+        item_price: props.item_price.value || ""
+      }),
 
     validationSchema: Yup.object().shape({
         l_id: Yup.string()
+            .ensure()
             .required("*Market is a required field"),
         c_id: Yup.string()
+            .ensure()
             .required("*Item is a required field"),
         item_description: Yup.string()
             .required("*Description is a required field"),

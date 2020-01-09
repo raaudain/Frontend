@@ -36,7 +36,8 @@ function LocationSelect(props)  {
                 getOptionValue={location => 
                     `${location.id}`
                 }
-                value={location.value}
+                value={location.id}
+                searchable={true}
                 options={location}
             />
             {!!props.error && props.touched && (

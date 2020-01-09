@@ -9,7 +9,10 @@ const selectionLabel = {
     fontSize: '.75rem'
   }
 
+  
+
 function CategorySelect(props)  {
+
 
     const [category, setCategory] = useState([]);
 
@@ -37,9 +40,8 @@ function CategorySelect(props)  {
                     `${category.loc_id}`
                 }
                 value={category.value}
-                // isSearchable={this.location.isSearchable}
+                searchable ={true}
                 options={category}
-                // searchable ={location.country.searchable}
             />
             {!!props.error && props.touched && (
                 <div style={{ color: "red", marginTop: ".5rem", float: "left"}}>
