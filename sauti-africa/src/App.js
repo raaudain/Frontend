@@ -21,11 +21,11 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={UserLogin} />
         <Route exact path="/register" component={Register} />
-        <PrivateRoute exact path="/market-price" component={MarketPrice} />
+        <Route exact path="/market-price" component={MarketPrice} />
         <Route exact path="/market-price/:id" render={(props) => <CategorySelect {...props} />}/>
         <Route exact path="/set-price/:id" render={(props) => <Edit {...props} />} />
-        <PrivateRoute exact path="/set-price" component={SetPrice} />
-        <PrivateRoute exact path="/add-item" component={AddItem} />
+        <Route exact path="/set-price" component={SetPrice} />
+        <Route exact path="/add-item" component={AddItem} />
         </div>
     </Router>
     );
