@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext, Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import { UserContext } from '../contexts/UserContext';
 
 const initialCategories = [
     {
@@ -16,7 +15,7 @@ const MarketPrice = () => {
     const [categories, setCategories] = useState(initialCategories);
     useEffect(() => {
         axiosWithAuth()
-            .get('https://build-week-africanmarketplace.herokuapp.com/api/category')
+            .get('/category')
             .then(res => {
                 setCategories(res.data);
             })

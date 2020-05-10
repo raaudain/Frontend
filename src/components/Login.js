@@ -23,10 +23,10 @@ class Login extends React.Component {
         e.preventDefault();
         let name = this.state.credentials.username;
         axiosWithAuth()
-            .post('https://build-week-africanmarketplace.herokuapp.com/api/auth/login', this.state.credentials)
+            .post('/auth/login', this.state.credentials)
             .then(res => {
                 axiosWithAuth()
-                    .get('https://build-week-africanmarketplace.herokuapp.com/api/users')
+                    .get('/users')
                     .then(res => {
                         console.log(name);
                         var found = res.data.find(function (element) {
